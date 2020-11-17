@@ -104,7 +104,7 @@ function read_chapter() {
 			MOD_READING=$BIBLE_MOD
 		fi
 		## To fix weird character display issues in some terminals, we use iconv.
-		if (whiptail --title "Chapter $CHAPTER" --yes-button "Next Chp." --no-button "Main Menu" --scrolltext --yesno "$(iconv -f UTF8 -t US-ASCII//TRANSLIT <<< $(diatheke -b "$MOD_READING" -l "$LOCALE" -k "$BOOK_READING""$CHAPTER"))" $(stty size)) then
+		if (whiptail --title "Chapter $CHAPTER" --yes-button "Next Chp." --no-button "Main Menu" --scrolltext --yesno "$(diatheke -f plain -b "$MOD_READING" -l "$LOCALE" -k "$BOOK_READING""$CHAPTER")" $(stty size)) then
 			if [[ $CHAPTER == "$LAST_CHAPTER" ]]; then
 				## Detect last chapter and move to next book.
 				let "BOOK=BOOK+1"
@@ -643,7 +643,7 @@ case $CHOICE in
 	exitstatus=$?
 	if [ $exitstatus = 0 ]; then
 		## To fix weird character display issues in some terminals, we use iconv.
-		whiptail --scrolltext --textbox /dev/stdin $(stty size) <<<"$(iconv -f UTF8 -t US-ASCII//TRANSLIT <<< $(diatheke -b "$BIBLE_MOD" -l "$LOCALE" -k "$VERSE"))"
+		whiptail --scrolltext --textbox /dev/stdin $(stty size) <<<"$(diatheke -f plain -b "$BIBLE_MOD" -l "$LOCALE" -k "$VERSE")"
 	else
 	echo "Jump to Verse: Canceled."
 	fi
@@ -655,7 +655,7 @@ case $CHOICE in
 		BIBLE_KEYWORD=$(whiptail --title "Search Bible" --inputbox "Type a keyword to lookup." 10 60 3>&1 1>&2 2>&3)
 		exitstatus=$?
 		if [ $exitstatus = 0 ]; then
-		whiptail --scrolltext --textbox /dev/stdin $(stty size) <<<"$(diatheke -b "$BIBLE_MOD" -l "$LOCALE" -s phrase -k "$BIBLE_KEYWORD")"
+		whiptail --scrolltext --textbox /dev/stdin $(stty size) <<<"$(diatheke -f plain -b "$BIBLE_MOD" -l "$LOCALE" -s phrase -k "$BIBLE_KEYWORD")"
 		else
 		echo "Bible Lookup: Canceled."
 		fi
@@ -665,7 +665,7 @@ case $CHOICE in
 		exitstatus=$?
 		if [ $exitstatus = 0 ]; then
 			## To fix weird character display issues in some terminals, we use iconv.
-			whiptail --scrolltext --textbox /dev/stdin $(stty size) <<<"$(iconv -f UTF8 -t US-ASCII//TRANSLIT <<< $(diatheke -b "$DICT_MOD" -l "$LOCALE" -k "$DICT_KEYWORD"))"
+			whiptail --scrolltext --textbox /dev/stdin $(stty size) <<<"$(diatheke -f plain -b "$DICT_MOD" -l "$LOCALE" -k "$DICT_KEYWORD")"
 		else
 		echo "Dictionary Lookup: Canceled."
 		fi
