@@ -39,13 +39,13 @@ fi
 ## Query installed modules function
 function getModules() {
 	# Regex to get installed Bible modules
-	BIBLES=$(diatheke -b system -k modulelist | sed -n '/^Biblical\ Texts:$/,/^Commentaries:$/p' | sed -e '1d;$d' -e 's/\s.*$//')
+	BIBLES=$(diatheke -b system -k modulelist | awk '/Biblical/,/Comment/ {if (!/Biblical|Comment/) print $1 }')
 	# Regex to get installed Dictionary modules
-	DICTIONARIES=$(diatheke -b system -k modulelist | sed -n '/^Dictionaries:$/,/^Generic\ books:$/p' | sed -e '1d;$d' -e 's/\s.*$//')
+	DICTIONARIES=$(diatheke -b system -k modulelist | awk '/Dictionaries/,/Daily/ {if (!/Dictionaries|Daily/) print $1 }')
 	## Regex to get installed Commentary modules
-	COMMENTARIES=$(diatheke -b system -k modulelist | sed -n '/^Commentaries:$/,/^Dictionaries:$/p' | sed -e '1d;$d' -e 's/\s.*$//')
+	COMMENTARIES=$(diatheke -b system -k modulelist | awk '/Commentaries/,/Dictionaries/ {if (!/Commentaries|Dictionaries/) print $1 }')
 	## Regex to get installed Generic Book modules
-	BOOKS=$(diatheke -b system -k modulelist | sed -n '/^Generic\ books:$/,$p' | sed -e '1d' -e 's/\s.*$//')
+	BOOKS=$(diatheke -b system -k modulelist | awk '/Generic/,EOF {if (!/Generic/) print $1 }')
 	## Find installed images/maps
 	IMAGES=$(find ~/.sword -name '*.jpg' -o -name '*.bmp' -o -name '*.png' -o -name '*.gif' | sed 's#.*/##')
 	## Regex to remove new lines: sed ':a;N;$!ba;s/\n/ /g'
