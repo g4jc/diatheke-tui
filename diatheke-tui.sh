@@ -683,7 +683,7 @@ case $CHOICE in
 		if [ $exitstatus = 0 ]; then
 			nohup curl "https://www.crosswire.org/ftpmirror/pub/sword/packages/rawzip/$BIBLE_MOD.zip" -o "$SWORD_DIR"/"$BIBLE_MOD".zip 2>&1 -# | stdbuf -oL tr '\r' '\n' | grep -o '[0-9]*\.' &> /tmp/module_down &
 			{
-			for ((i = 0 ; i <= 100 ; ++i)); do
+			while [ $(( ( i += 1 ) <= 100 )) -ne 0 ]; do
 				## Make up "fake" percentage until curl actually reaches 100.
 				if [[ $(tail -1 "/tmp/module_down") = "100." ]]
 					then
@@ -701,7 +701,6 @@ case $CHOICE in
 			done
 			} | whiptail --gauge "Please wait while downloading module..." 6 60 0
 			rm /tmp/module_down ## Cleanup temp download progress file.
-
 			## Check for file integrity
 			if [ "$(unzip -t "$SWORD_DIR"/"$BIBLE_MOD".zip | grep "No errors")" ]; then
 			## Install it and inform the user
@@ -729,7 +728,7 @@ case $CHOICE in
 		if [ $exitstatus = 0 ]; then
 			nohup curl "https://www.crosswire.org/ftpmirror/pub/sword/packages/rawzip/$DICT_MOD.zip" -o "$SWORD_DIR"/"$DICT_MOD".zip 2>&1 -# | stdbuf -oL tr '\r' '\n' | grep -o '[0-9]*\.' &> /tmp/module_down &
 			{
-			for ((i = 0 ; i <= 100 ; ++i)); do
+			while [ $(( ( i += 1 ) <= 100 )) -ne 0 ]; do
 				## Make up "fake" percentage until curl actually reaches 100.
 				if [[ $(tail -1 "/tmp/module_down") = "100." ]]
 					then
@@ -777,7 +776,7 @@ case $CHOICE in
 		if [ $exitstatus = 0 ]; then
 			nohup curl "https://www.crosswire.org/ftpmirror/pub/sword/packages/rawzip/$COMMEN_MOD.zip" -o "$SWORD_DIR"/"$COMMEN_MOD".zip 2>&1 -# | stdbuf -oL tr '\r' '\n' | grep -o '[0-9]*\.' &> /tmp/module_down &
 			{
-			for ((i = 0 ; i <= 100 ; ++i)); do
+			while [ $(( ( i += 1 ) <= 100 )) -ne 0 ]; do
 				## Make up "fake" percentage until curl actually reaches 100.
 				if [[ $(tail -1 "/tmp/module_down") = "100." ]]
 					then
@@ -822,7 +821,7 @@ case $CHOICE in
 		if [ $exitstatus = 0 ]; then
 			nohup curl "https://www.crosswire.org/ftpmirror/pub/sword/packages/rawzip/$BOOK_MOD.zip" -o "$SWORD_DIR"/"$BOOK_MOD".zip 2>&1 -# | stdbuf -oL tr '\r' '\n' | grep -o '[0-9]*\.' &> /tmp/module_down &
 			{
-			for ((i = 0 ; i <= 100 ; ++i)); do
+			while [ $(( ( i += 1 ) <= 100 )) -ne 0 ]; do
 				## Make up "fake" percentage until curl actually reaches 100.
 				if [[ $(tail -1 "/tmp/module_down") = "100." ]]
 					then
@@ -886,7 +885,7 @@ case $CHOICE in
 		if [ $exitstatus = 0 ]; then
 			nohup curl "ftp://ftp.xiphos.org/pub/sword/zip/$IMAGE_DOWN.zip" -o "$SWORD_DIR"/"$IMAGE_DOWN".zip 2>&1 -# | stdbuf -oL tr '\r' '\n' | grep -o '[0-9]*\.' &> /tmp/module_down &
 			{
-			for ((i = 0 ; i <= 100 ; ++i)); do
+			while [ $(( ( i += 1 ) <= 100 )) -ne 0 ]; do
 				## Make up "fake" percentage until curl actually reaches 100.
 				if [[ $(tail -1 "/tmp/module_down") = "100." ]]
 					then
